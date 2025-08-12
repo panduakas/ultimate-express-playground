@@ -1,0 +1,39 @@
+{
+  "name": "ultimate-express-playground",
+  "module": "src/app.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/app.ts",
+    "dev": "bun --watch src/app.ts",
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "mariadb": "^3.3.1",
+    "mindsdb-sdk": "^1.0.0",
+    "node-cron": "^3.0.3",
+    "sequelize": "^6.37.3",
+    "ultimate-express": "^2.0.9"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/axios": "^0.14.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.9",
+    "@types/node-cron": "^3.0.11",
+    "@types/sequelize": "^4.28.20",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.14.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

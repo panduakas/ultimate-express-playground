@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Pass environment variables from host or .env file
+      PORT: ${PORT}
+      BINANCE_API_URL: ${BINANCE_API_URL}
+      DB_HOST: mariadb
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      MINDSDB_HOST: mindsdb
+      MINDSDB_PORT: ${MINDSDB_PORT}
+      CRON_EXPRESSION: ${CRON_EXPRESSION}
+      TRAINING_MODEL_NAME: ${TRAINING_MODEL_NAME}
+    depends_on:
+      - mariadb
+      - mindsdb
+    volumes:
+      - .:/app # Mount the current directory into the container for development
+      - /app/node_modules # Exclude node_modules from host mount to prevent issues
+
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      MARIADB_ROOT_PASSWORD: root_password
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  mindsdb:
+    image: mindsdb/mindsdb:latest
+    ports:
+      - "47334:47334" # MindsDB TCP API
+      - "47335:47335" # MindsDB HTTP API
+    environment:
+      MINDSDB_API_PORT: 47334
+      MINDSDB_HTTP_PORT: 47335
+    volumes:
+      - mindsdb_data:/var/lib/mindsdb
+
+volumes:
+  mariadb_data:
+  mindsdb_data:
